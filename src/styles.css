@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+html, body { height: 100%; }
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* Angular Material Theme Overrides */
+.mat-mdc-dialog-container {
+  /* --mdc-dialog-container-color: transparent !important; */
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.dark {
+  @apply bg-gray-900 text-white;
+}
