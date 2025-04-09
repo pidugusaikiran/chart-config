@@ -46,68 +46,94 @@ import { JsonPipe } from '@angular/common';
           <div class="config-form">
             <form [formGroup]="configForm" class="space-y-4">
               @for (option of chartOptions; track option.key) {
-              <div class="form-field">
-                <mat-form-field class="w-full">
-                  @switch (option.type) { @case ('text') {
-                  <!-- <ng-container> -->
-                  <ng-container matLabel>{{ option.name }}</ng-container>
-                  <input matInput [formControlName]="option.key" />
-                  <!-- </ng-container> -->
-                  } @case ('number') {
-                  <!-- <ng-container> -->
-                  <ng-container matLabel>{{ option.name }}</ng-container>
-                  <input
-                    matInput
-                    type="number"
-                    [formControlName]="option.key"
-                  />
-                  <!-- </ng-container> -->
-                  } @case ('color') {
-                  <!-- <ng-container> -->
-                  <ng-container matLabel>{{ option.name }}</ng-container>
-                  <input matInput type="color" [formControlName]="option.key" />
-                  <!-- </ng-container> -->
-                  } @case ('boolean') {
-                  <!-- <ng-container> -->
-                  <mat-checkbox [formControlName]="option.key">
-                    {{ option.name }}
-                  </mat-checkbox>
-                  <!-- </ng-container> -->
-                  } @case ('select') {
-                  <!-- <ng-container> -->
-                  <ng-container matLabel>{{ option.name }}</ng-container>
-                  <mat-select [formControlName]="option.key">
-                    @for (opt of option.options; track opt) {
-                    <mat-option [value]="opt">{{ opt }}</mat-option>
+                <div class="form-field">
+                  @if (option.type !== 'group') {
+                    @switch (option.type) {
+                      @case ('text') {
+                        <mat-form-field class="w-full">
+                          <mat-label>{{ option.name }}</mat-label>
+                          <input matInput [formControlName]="option.key" />
+                        </mat-form-field>
+                      }
+                      @case ('boolean') {
+                        <div class="py-2">
+                          <mat-checkbox [formControlName]="option.key">
+                            {{ option.name }}
+                          </mat-checkbox>
+                        </div>
+                      }
+                      @case ('color') {
+                        <mat-form-field class="w-full">
+                          <mat-label>{{ option.name }}</mat-label>
+                          <input matInput type="color" [formControlName]="option.key" class="h-10" />
+                        </mat-form-field>
+                      }
+                      @case ('select') {
+                        <mat-form-field class="w-full">
+                          <mat-label>{{ option.name }}</mat-label>
+                          <mat-select [formControlName]="option.key">
+                            @for (opt of option.options; track opt) {
+                              <mat-option [value]="opt">{{ opt }}</mat-option>
+                            }
+                          </mat-select>
+                        </mat-form-field>
+                      }
                     }
-                  </mat-select>
-                  <!-- </ng-container> -->
-                  } }
-                </mat-form-field>
-              </div>
+                  } @else {
+                    <div class="border rounded-lg p-4 mb-4 dark:border-gray-700">
+                      <h4 class="text-lg font-semibold mb-3">{{ option.name }}</h4>
+                      <div class="space-y-3">
+                        @for (subOption of option.options; track subOption.key) {
+                          @switch (subOption.type) {
+                            @case ('boolean') {
+                              <div class="py-1">
+                                <mat-checkbox [formControlName]="subOption.key">
+                                  {{ subOption.name }}
+                                </mat-checkbox>
+                              </div>
+                            }
+                            @case ('number') {
+                              <mat-form-field class="w-full">
+                                <mat-label>{{ subOption.name }}</mat-label>
+                                <input 
+                                  matInput 
+                                  type="number" 
+                                  [formControlName]="subOption.key"
+                                  [min]="subOption.min"
+                                  [max]="subOption.max"
+                                />
+                              </mat-form-field>
+                            }
+                            @case ('color') {
+                              <mat-form-field class="w-full">
+                                <mat-label>{{ subOption.name }}</mat-label>
+                                <input 
+                                  matInput 
+                                  type="color" 
+                                  [formControlName]="subOption.key"
+                                  class="h-10"
+                                />
+                              </mat-form-field>
+                            }
+                          }
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
               }
             </form>
           </div>
 
           <div class="preview-section">
-            <h3 class="text-xl font-semibold mb-4">Preview</h3>
+            <!-- <h3 class="text-xl font-semibold mb-4">Preview</h3>
             <app-chart-preview [chartType]="data.id" [config]="previewConfig">
-            </app-chart-preview>
+            </app-chart-preview> -->
 
             <div class="mt-4">
               <h4 class="text-lg font-semibold mb-2">Generated JSON</h4>
-              <pre
-                class="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-auto"
-              >
-                {{ previewConfig | json }}
-              </pre
-              >
-              <button
-                mat-raised-button
-                color="primary"
-                class="mt-4"
-                (click)="downloadJSON()"
-              >
+              <pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-auto">{{ previewConfig | json }}</pre>
+              <button mat-raised-button color="primary" class="mt-4" (click)="downloadJSON()">
                 Download JSON
               </button>
             </div>
@@ -142,7 +168,13 @@ export class ChartConfigDialogComponent {
   private initForm(): void {
     const group: any = {};
     this.chartOptions.forEach((option) => {
-      group[option.key] = [option.default];
+      if (option.type === 'group' && option?.options) {
+        option?.options.forEach((subOption) => {
+          group[subOption.key] = [subOption.default];
+        });
+      } else {
+        group[option.key] = [option.default];
+      }
     });
     this.configForm = this.fb.group(group);
 

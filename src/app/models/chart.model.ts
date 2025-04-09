@@ -19,7 +19,7 @@ export interface ChartConfig {
 export interface ChartOption {
   name: string;
   key: string;
-  type: 'text' | 'number' | 'color' | 'boolean' | 'select';
-  options?: string[];
+  type: 'text' | 'number' | 'color' | 'boolean' | 'select' | 'group';
+  options?: any[];
   default?: any;
 }
