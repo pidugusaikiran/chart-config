@@ -57,3 +57,57 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+I want to create a design system component library similar to PrimeNG or Angular Material, but built with Angular and TailwindCSS as the base technologies.
+
+📌 Goal:
+
+Build reusable, customizable UI components (buttons, cards, modals, inputs, dropdowns, tables, etc.).
+
+Ensure compatibility with Angular, and make the library's output portable or framework-agnostic enough to integrate with React and VueJS (e.g., via Web Components or Stencil).
+
+🛠️ Tech Stack:
+
+Angular (preferably standalone components)
+
+TailwindCSS (for utility-first styling)
+
+Component theming support
+
+Accessibility (ARIA compliance)
+
+Firebase for hosting, testing, and CI/CD integration
+
+📦 Expected Deliverables:
+
+A monorepo structure for scalable component development.
+
+Each component should:
+
+Be standalone, customizable, and documented.
+
+Use TailwindCSS classes (no external CSS files).
+
+Include responsive and dark mode support.
+
+Have a storybook-like preview page or live playground.
+
+Package output that can be used in Angular projects and exposed via Web Components for use in React/Vue.
+
+A Firebase-hosted demo site for the component showcase and documentation.
+
+🎯 Use cases:
+
+Rapid frontend development across multiple frameworks.
+
+Plug-and-play components for internal and client applications.
+
+Please generate a starter workspace with:
+
+A sample button, card, and modal component.
+
+Tailwind setup with Angular.
+
+Build & packaging support for publishing the components.
+
+Firebase integration for CI/CD and hosting.
