@@ -5,11 +5,13 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { ChartConfig } from '../../models/chart.model';
 import { FusionChartsModule } from 'angular-fusioncharts';
 
-// Initialize FusionCharts with required modules
-// FusionCharts.options.creditLabel = false;
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 
-// Pass the fusioncharts library and chart modules
-// FusionCharts.addDep(Charts);
+// Initialize FusionCharts Module
+const fc = FusionCharts.default || FusionCharts;
+FusionChartsModule.fcRoot(fc, Charts, FusionTheme);
 
 
 @Component({

@@ -95,9 +95,9 @@ import { JsonPipe } from '@angular/common';
                             @case ('number') {
                               <mat-form-field class="w-full">
                                 <mat-label>{{ subOption.name }}</mat-label>
-                                <input 
-                                  matInput 
-                                  type="number" 
+                                <input
+                                  matInput
+                                  type="number"
                                   [formControlName]="subOption.key"
                                   [min]="subOption.min"
                                   [max]="subOption.max"
@@ -107,9 +107,9 @@ import { JsonPipe } from '@angular/common';
                             @case ('color') {
                               <mat-form-field class="w-full">
                                 <mat-label>{{ subOption.name }}</mat-label>
-                                <input 
-                                  matInput 
-                                  type="color" 
+                                <input
+                                  matInput
+                                  type="color"
                                   [formControlName]="subOption.key"
                                   class="h-10"
                                 />
@@ -126,9 +126,9 @@ import { JsonPipe } from '@angular/common';
           </div>
 
           <div class="preview-section">
-            <!-- <h3 class="text-xl font-semibold mb-4">Preview</h3>
+            <h3 class="text-xl font-semibold mb-4">Preview</h3>
             <app-chart-preview [chartType]="data.id" [config]="previewConfig">
-            </app-chart-preview> -->
+            </app-chart-preview>
 
             <div class="mt-4">
               <h4 class="text-lg font-semibold mb-2">Generated JSON</h4>
